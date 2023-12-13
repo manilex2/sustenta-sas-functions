@@ -1,0 +1,16 @@
+{
+  "name": "sustenta-sas-functions",
+  "version": "1.0.0",
+  "description": "Funciones Cloud de Firebase para la APP de Sustenta",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "author": "Manuel Pereira",
+  "license": "ISC"
+}
