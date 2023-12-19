@@ -237,8 +237,8 @@ const initApp = async (req, res) => {
             const xUtm = newlistaLatLong[0];
             const yUtm = newlistaLatLong[1];
             const [lon, lat] = utm.inverse([xUtm, yUtm]);
-            const utcDays = Math.floor((proyecto.fechaFinProy + 1) - 25569);
             const geoPoint = new GeoPoint(lat, lon);
+            const utcDays = Math.floor((proyecto.fechaFinProy + 1) - 25569);
             proyecto = {
               ...proyecto,
               institucionId: newInstRef,
