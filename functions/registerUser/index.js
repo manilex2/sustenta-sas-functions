@@ -125,7 +125,7 @@ const registerUser = async (req, res) => {
     } else {
       throw new Error("El usuario ya se encuentra creado.");
     }
-    res.status(200).send({status: "Success", message: instRef});
+    res.status(200).send({status: "Success", message: "Usuario creado exitósamente."});
   } catch (error) {
     res.status(403).send({status: "Error", message: `Ocurrió el siguiente error: ${error}`});
   }
