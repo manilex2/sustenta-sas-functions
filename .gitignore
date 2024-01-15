@@ -67,3 +67,6 @@ node_modules/
 
 # MAC dotfiles
 .DS_Store
+
+# Lock Files
+*-lock.json
