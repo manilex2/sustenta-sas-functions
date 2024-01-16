@@ -32,4 +32,6 @@ const utmToGeo = async (req, res) => {
   }
 };
 
-exports.utmToGeo = onRequest(utmToGeo);
+exports.utmToGeo = onRequest({
+  cors: ["https://sustenta.flutterflow.app"],
+}, utmToGeo);
