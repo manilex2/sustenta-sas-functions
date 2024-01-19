@@ -28,17 +28,17 @@ const utmToGeo = async (req, res) => {
     let utm;
     if (req.body.zona == "15N") {
       utm = proj4("EPSG:32615");
-    } else if(req.body.zona == "15S") {
+    } else if (req.body.zona == "15S") {
       utm = proj4("EPSG:32715");
-    } else if(req.body.zona == "16N") {
+    } else if (req.body.zona == "16N") {
       utm = proj4("EPSG:32616");
-    } else if(req.body.zona == "16S") {
+    } else if (req.body.zona == "16S") {
       utm = proj4("EPSG:32716");
-    } else if(req.body.zona == "17N") {
+    } else if (req.body.zona == "17N") {
       utm = proj4("EPSG:32617");
-    } else if(req.body.zona == "17S") {
+    } else if (req.body.zona == "17S") {
       utm = proj4("EPSG:32717");
-    } else if(req.body.zona == "18N") {
+    } else if (req.body.zona == "18N") {
       utm = proj4("EPSG:32618");
     } else {
       utm = proj4("EPSG:32718");
