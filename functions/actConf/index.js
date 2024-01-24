@@ -43,6 +43,10 @@ const actConf = async (req, res) => {
     id: consultora.id,
     ...consultora.data(),
   }));
+  let segConf = 0;
+  let segNoConfBaja = 0;
+  let segNoConfAlta = 0;
+  let segSinCalif = 0;
   let medConf = 0;
   let medNoConfBaja = 0;
   let medNoConfAlta = 0;
@@ -81,6 +85,43 @@ const actConf = async (req, res) => {
                     for (let e = 0; e < medidas.length; e++) {
                       const medida = medidas[e];
                       if (programa.id == medida.programaId._path.segments[1]) {
+                        for (let f = 0; f < medida.seguimiento.length; f++) {
+                          const seguimiento = medida.seguimiento[f];
+                          switch (seguimiento.calificacion) {
+                            case "Conformidad":
+                              segConf++;
+                              break;
+                            case "No Conformidad Baja":
+                              segNoConfBaja++;
+                              break;
+                            case "No Conformidad Alta":
+                              segNoConfAlta++;
+                              break;
+                            default:
+                              segSinCalif++;
+                              break;
+                          }
+                        }
+                        if (segNoConfAlta >= 1 && segNoConfBaja == 0 && segConf == 0) {
+                          califInt = "No Conformidad Alta";
+                        } else if (segNoConfAlta == 1) {
+                          califInt = "No Conformidad Baja";
+                        } else if (segNoConfAlta == 2) {
+                          califInt = "No Conformidad Alta";
+                        } else if (segNoConfBaja >= 1) {
+                          califInt = "No Conformidad Baja";
+                        } else if (segNoConfAlta == 0 && segNoConfBaja == 0 && segConf == 0) {
+                          califInt = "Sin Calificación";
+                        } else {
+                          califInt = "Conformidad";
+                        }
+                        console.log(`Seg Conf: ${segConf}, Seg No Conf Baja: ${segNoConfBaja}, Seg No Conf Alta: ${segNoConfAlta}, Seg Sin calificación: ${segSinCalif}, Calificación Medida: ${califInt}`);
+                        const data = {
+                          calificacionInterna: califInt,
+                        };
+                        await db.collection("medidas").doc(medida.id).update(data);
+                        medidas[e] = {...medida, ...data};
+                        segConf = 0, segNoConfBaja = 0, segNoConfAlta = 0, segSinCalif = 0, califInt = "";
                         switch (medidas[e].calificacionInterna) {
                           case "Conformidad":
                             medConf++;
@@ -110,7 +151,7 @@ const actConf = async (req, res) => {
                     } else {
                       califInt = "Conformidad";
                     }
-                    console.log(`Conf: ${medConf}, No Conf Baja: ${medNoConfBaja}, No Conf Alta: ${medNoConfAlta}, Sin calificación: ${medSinCalif}, Calificación Programa: ${califInt}`);
+                    console.log(`Med Conf: ${medConf}, Med No Conf Baja: ${medNoConfBaja}, Med No Conf Alta: ${medNoConfAlta}, Med Sin calificación: ${medSinCalif}, Calificación Programa: ${califInt}`);
                     const data = {
                       medConf,
                       medNoConfBaja,
@@ -150,7 +191,7 @@ const actConf = async (req, res) => {
                 } else {
                   califInt = "Conformidad";
                 }
-                console.log(`Conf: ${progConf}, No Conf Baja: ${progNoConfBaja}, No Conf Alta: ${progNoConfAlta}, Sin calificación: ${progSinCalif}, Calificación Plan: ${califInt}`);
+                console.log(`Prog Conf: ${progConf}, Prog No Conf Baja: ${progNoConfBaja}, Prog No Conf Alta: ${progNoConfAlta}, Prog Sin calificación: ${progSinCalif}, Calificación Plan: ${califInt}`);
                 const data = {
                   progConf,
                   progNoConfBaja,
@@ -190,7 +231,7 @@ const actConf = async (req, res) => {
             } else {
               califInt = "Conformidad";
             }
-            console.log(`Conf: ${planConf}, No Conf Baja: ${planNoConfBaja}, No Conf Alta: ${planNoConfAlta}, Sin calificación: ${planSinCalif}, Calificación Proyecto: ${califInt}`);
+            console.log(`Plan Conf: ${planConf}, Plan No Conf Baja: ${planNoConfBaja}, Plan No Conf Alta: ${planNoConfAlta}, Plan Sin calificación: ${planSinCalif}, Calificación Proyecto: ${califInt}`);
             const data = {
               planConf,
               planNoConfBaja,
@@ -230,7 +271,7 @@ const actConf = async (req, res) => {
         } else {
           califInt = "Conformidad";
         }
-        console.log(`Conf: ${proyConf}, No Conf Baja: ${proyNoConfBaja}, No Conf Alta: ${proyNoConfAlta}, Sin calificación: ${proySinCalif}, Calificación Institucion: ${califInt}`);
+        console.log(`Proy Conf: ${proyConf}, Proy No Conf Baja: ${proyNoConfBaja}, Proy No Conf Alta: ${proyNoConfAlta}, Proy Sin calificación: ${proySinCalif}, Calificación Institucion: ${califInt}`);
         const data = {
           proyConf,
           proyNoConfBaja,
@@ -270,7 +311,7 @@ const actConf = async (req, res) => {
     } else {
       califInt = "Conformidad";
     }
-    console.log(`Conf: ${instConf}, No Conf Baja: ${InstNoConfBaja}, No Conf Alta: ${InstNoConfAlta}, Sin calificación: ${instSinCalif}, Calificación Consultora: ${califInt}`);
+    console.log(`Inst Conf: ${instConf}, Inst No Conf Baja: ${InstNoConfBaja}, Inst No Conf Alta: ${InstNoConfAlta}, Inst Sin calificación: ${instSinCalif}, Calificación Consultora: ${califInt}`);
     const data = {
       instConf,
       InstNoConfBaja,
