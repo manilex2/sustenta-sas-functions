@@ -27,6 +27,45 @@
       ]
     },
     {
+      "source": "functions/fechaCronSeg",
+      "codebase": "fecha-cron-seg",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint"
+      ]
+    },
+    {
+      "source": "functions/fechaCronSegDel",
+      "codebase": "fecha-cron-seg-del",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint"
+      ]
+    },
+    {
+      "source": "functions/fechaCronSegEdit",
+      "codebase": "fecha-cron-seg-edit",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint"
+      ]
+    },
+    {
       "source": "functions/initApp",
       "codebase": "init-app",
       "ignore": [

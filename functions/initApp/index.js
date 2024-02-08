@@ -181,8 +181,8 @@ const initApp = async (req, res) => {
               ...responsable,
               instId: newInstRef,
             };
-            const noCreated = users.some((resp) => resp.email === user.email);
-            if (!noCreated && responsable.rol == "empresa") {
+            const created = users.some((resp) => resp.email === user.email);
+            if (!created && responsable.rol == "empresa") {
               const newRespRef = db.collection("users").doc();
               try {
                 const usuario = await auth.createUser({...user, uid: `${newRespRef.id}`});
@@ -199,9 +199,9 @@ const initApp = async (req, res) => {
               }
             }
           }
-          const noCreated = users.some((resp) => resp.email === user.email);
+          const created = users.some((resp) => resp.email === user.email);
 
-          if (!noCreated && responsable.rol != "empresa") {
+          if (!created && responsable.rol != "empresa") {
             const newRespRef = db.collection("users").doc();
             try {
               const usuario = await auth.createUser({...user, uid: `${newRespRef.id}`});
